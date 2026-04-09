@@ -1,0 +1,342 @@
+/* ==========================================
+   ESTILOS VISUALES - RELICK
+   ========================================== */
+
+@import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&display=swap');
+
+:root { 
+    --relick-red: #ff003c; 
+    --relick-green: #00ff41; 
+    --relick-blue: #00d2ff; 
+    --metal-dark: #0a0a0a; 
+}
+
+body { 
+    background-color: var(--metal-dark); 
+    color: white; 
+    font-family: 'Orbitron', sans-serif; 
+    margin: 0; 
+    padding: 0; 
+    height: 100vh; 
+    display: flex; 
+    flex-direction: column; 
+    overflow: hidden; 
+    user-select: none; 
+}
+
+/* --- BOTÓN DE AUDIO --- */
+#btn-audio { 
+    position: fixed; 
+    top: 20px; 
+    left: 20px; 
+    z-index: 9999; 
+    background: rgba(0,0,0,0.8); 
+    border: 2px solid var(--relick-blue); 
+    color: white; 
+    width: 45px; 
+    height: 45px; 
+    border-radius: 50%; 
+    display: flex; 
+    align-items: center; 
+    justify-content: center; 
+    cursor: pointer; 
+    font-size: 20px; 
+    box-shadow: 0 0 15px rgba(0,210,255,0.4); 
+    transition: all 0.2s; 
+}
+#btn-audio:active { transform: scale(0.9); }
+#btn-audio.muted { 
+    border-color: var(--relick-red); 
+    box-shadow: 0 0 15px rgba(255,0,60,0.4); 
+    opacity: 0.6; 
+}
+
+/* --- CONTENEDOR PRINCIPAL --- */
+.game-container { 
+    flex: 1; 
+    display: flex; 
+    flex-direction: column; 
+    background: radial-gradient(circle at center, rgba(0,210,255,0.05) 0%, transparent 70%), url('https://www.transparenttextures.com/patterns/carbon-fibre.png'); 
+}
+
+/* --- BARRAS DE ESTADO Y FASES --- */
+.stats-bar { 
+    height: 45px; 
+    background: rgba(0,0,0,0.9); 
+    border-bottom: 1px solid #333; 
+    display: flex; 
+    justify-content: space-between; 
+    align-items: center; 
+    padding: 0 15px; 
+    z-index: 50; 
+}
+.phase-bar { 
+    display: flex; 
+    width: 100%; 
+    background: #111; 
+    border-bottom: 1px solid #222; 
+    font-size: 10px; 
+    font-weight: 900; 
+}
+.phase-item { 
+    flex: 1; 
+    padding: 8px 0; 
+    text-align: center; 
+    color: #444; 
+    transition: all 0.3s; 
+    display: flex; 
+    flex-direction: column; 
+    justify-content: center; 
+}
+.phase-item.active { 
+    background: rgba(255,0,60,0.1); 
+    color: var(--relick-red); 
+    border-bottom: 2px solid var(--relick-red); 
+}
+
+/* --- TABLERO Y ZONAS --- */
+.board { 
+    flex: 1; 
+    display: flex; 
+    flex-direction: column; 
+    padding: 5px 2px; 
+    gap: 2px; 
+    justify-content: space-around; 
+}
+.player-area { 
+    display: flex; 
+    flex-direction: column; 
+    gap: 4px; 
+    width: 100%; 
+}
+.board-row { 
+    display: flex; 
+    justify-content: center; 
+    align-items: center; 
+    gap: 1vw; 
+    width: 100%; 
+}
+
+/* --- SLOTS (ZONAS DE CARTAS) --- */
+.slot { 
+    width: 11vw; 
+    max-width: 48px; 
+    height: 16vw; 
+    max-height: 70px; 
+    background: rgba(255,255,255,0.03); 
+    border: 1px solid #333; 
+    border-radius: 4px; 
+    position: relative; 
+    display: flex; 
+    flex-direction: column; 
+    align-items: center; 
+    justify-content: center; 
+    font-size: 10px; 
+    color: #444; 
+    box-shadow: inset 0 0 10px rgba(0,0,0,0.5); 
+    flex-shrink: 0; 
+    cursor: pointer; 
+}
+.slot-title { 
+    position: absolute; 
+    top: 2px; 
+    font-size: 5px; 
+    text-transform: uppercase; 
+    letter-spacing: 0.5px; 
+    opacity: 0.6; 
+    width: 100%; 
+    text-align: center; 
+    pointer-events: none; 
+}
+
+/* ZONAS ESPECÍFICAS */
+.canje-col { 
+    display: flex; 
+    flex-direction: column; 
+    justify-content: space-between; 
+    width: 11vw; 
+    max-width: 48px; 
+    height: 16vw; 
+    max-height: 70px; 
+    flex-shrink: 0; 
+}
+.slot-canje { 
+    width: 100%; 
+    height: 48%; 
+    background: rgba(255,255,255,0.02); 
+    border: 1px dashed #555; 
+    border-radius: 3px; 
+    display: flex; 
+    align-items: center; 
+    justify-content: center; 
+    position: relative; 
+}
+.hab-grid { 
+    display: grid; 
+    grid-template-columns: repeat(2, 1fr); 
+    gap: 2px; 
+    width: 16vw; 
+    max-width: 75px; 
+    height: 16vw; 
+    max-height: 75px; 
+    flex-shrink: 0; 
+}
+.slot-hab { 
+    width: 100%; 
+    height: 100%; 
+    background: rgba(255,0,60,0.05); 
+    border: 1px dashed rgba(255,0,60,0.3); 
+    border-radius: 2px; 
+    position: relative; 
+    display: flex; 
+    align-items: center; 
+    justify-content: center; 
+}
+
+/* RELIKARIO Y CARTAS EN CAMPO */
+.relikario-hex { 
+    width: 14vw; 
+    max-width: 60px; 
+    height: 14vw; 
+    max-height: 60px; 
+    background: rgba(0,210,255,0.05); 
+    border: 2px solid var(--relick-blue); 
+    clip-path: polygon(25% 0%, 75% 0%, 100% 50%, 75% 100%, 25% 100%, 0% 50%); 
+    display: flex; 
+    flex-direction: column; 
+    align-items: center; 
+    justify-content: center; 
+    box-shadow: 0 0 15px rgba(0,210,255,0.2); 
+    flex-shrink: 0; 
+}
+.card-field { 
+    width: 94%; 
+    height: 94%; 
+    border-radius: 3px; 
+    display: flex; 
+    align-items: center; 
+    justify-content: center; 
+    text-align: center; 
+    font-size: 5.5px; 
+    font-weight: 900; 
+    color: black; 
+    padding: 1px; 
+    text-transform: uppercase; 
+    line-height: 1; 
+    box-shadow: 0 1px 3px rgba(0,0,0,0.5); 
+    overflow: hidden; 
+    word-break: break-word; 
+}
+
+/* --- MANOS DE CARTAS --- */
+.hand { 
+    height: 110px; 
+    background: rgba(0,0,0,0.8); 
+    border-top: 1px solid #222; 
+    display: flex; 
+    gap: 8px; 
+    padding: 10px; 
+    overflow-x: auto; 
+    align-items: center; 
+}
+.card-hand { 
+    width: 70px; 
+    min-width: 70px; 
+    height: 95px; 
+    border-radius: 5px; 
+    border: 2px solid white; 
+    color: black; 
+    font-size: 9px; 
+    line-height: 1.1; 
+    word-wrap: break-word; 
+    font-weight: 900; 
+    display: flex; 
+    flex-direction: column; 
+    justify-content: center; 
+    text-align: center; 
+    padding: 4px; 
+    cursor: pointer; 
+    flex-shrink: 0; 
+    text-transform: uppercase; 
+    box-shadow: 0 4px 10px rgba(0,0,0,0.5); 
+    transition: transform 0.1s; 
+}
+.card-hand:active { transform: scale(0.95); }
+
+.rival-hand-container { 
+    display: flex; 
+    justify-content: center; 
+    align-items: center; 
+    width: 100%; 
+    height: 55px; 
+    margin-bottom: 2px; 
+}
+.card-back { 
+    width: 36px; 
+    height: 52px; 
+    background: repeating-linear-gradient(45deg, #4a0404, #4a0404 4px, #2a0202 4px, #2a0202 8px); 
+    border: 1px solid var(--relick-red); 
+    border-radius: 3px; 
+    box-shadow: -3px 0 5px rgba(0,0,0,0.6); 
+    margin-left: -18px; 
+    flex-shrink: 0; 
+    position: relative; 
+}
+.card-back:first-child { margin-left: 0; }
+.card-back::after { 
+    content: "R"; 
+    position: absolute; 
+    inset: 0; 
+    display: flex; 
+    align-items: center; 
+    justify-content: center; 
+    color: rgba(255, 0, 60, 0.3); 
+    font-size: 24px; 
+    font-weight: 900; 
+}
+
+/* --- PANTALLAS SUPERPUESTAS (OVERLAYS) --- */
+.overlay { 
+    position: fixed; 
+    inset: 0; 
+    background: rgba(0,0,0,0.95); 
+    z-index: 100; 
+    display: none; 
+    flex-direction: column; 
+    align-items: center; 
+    justify-content: center; 
+    padding: 20px; 
+}
+#notification { 
+    position: fixed; 
+    top: 50%; 
+    left: 50%; 
+    transform: translate(-50%, -50%); 
+    background: var(--relick-red); 
+    padding: 15px 30px; 
+    border-radius: 8px; 
+    border: 2px solid white; 
+    z-index: 200; 
+    display: none; 
+    text-align: center; 
+    font-weight: 900; 
+    box-shadow: 0 0 40px rgba(255,0,60,0.5); 
+}
+
+/* --- MENÚ DE OPCIONES (OVERLAY ELECCIONES) --- */
+.choice-options-container { 
+    width: 100%; 
+    max-width: 380px; 
+    max-height: 75vh; 
+    overflow-y: auto; 
+    display: flex; 
+    flex-direction: column; 
+    align-items: center; 
+    padding-right: 5px; 
+    gap: 10px; 
+}
+.choice-options-container::-webkit-scrollbar { width: 4px; }
+.choice-options-container::-webkit-scrollbar-thumb { 
+    background: #ef4444; 
+    border-radius: 4px; 
+}
